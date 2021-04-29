@@ -20,6 +20,7 @@ object TraceSystemService {
     }
 
     @Suppress("UNCHECKED_CAST")
+    @JvmStatic
     fun trace(target: TraceMethod) {
         try {
             val serviceName = target.serviceName
