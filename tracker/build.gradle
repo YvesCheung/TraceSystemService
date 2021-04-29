@@ -37,32 +37,15 @@ android.libraryVariants.all { variant ->
     variant.processJavaResources.dependsOn(taskName)
 }
 
-task sourcesJar(type: Jar) {
-    from android.sourceSets.main.java.srcDirs
-    classifier = 'sources'
-}
+ext {
+    libraryName = rootProject.name
 
-publishing {
-    publications {
-        release(MavenPublication) {
-            artifact "$buildDir/outputs/aar/${project.getName()}-release.aar"
-            artifact sourcesJar
-            groupId = group
-            artifactId = rootProject.name
-            version = version
-            pom {
-                developers {
-                    developer {
-                        name = 'YvesCheung'
-                        email = '975135274@qq.com'
-                    }
-                }
-                scm {
-                    connection = 'https://github.com/YvesCheung/RollingText.git'
-                    developerConnection = 'https://github.com/YvesCheung/RollingText.git'
-                    url = 'https://github.com/YvesCheung/RollingText'
-                }
-            }
-        }
-    }
+    libraryDescription = 'A tools to debug or intercept the methods call for Android Context.getSystemService.'
+
+    siteUrl = 'https://github.com/YvesCheung/TraceSystemService'
+    gitUrl = 'https://github.com/YvesCheung/TraceSystemService.git'
+
+    developerName = 'YvesCheung'
+    developerEmail = '975135274@qq.com'
 }
+apply from: '../gradle/publish.gradle'
