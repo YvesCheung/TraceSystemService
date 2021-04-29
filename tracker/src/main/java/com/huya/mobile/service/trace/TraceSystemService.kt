@@ -2,6 +2,7 @@ package com.huya.mobile.service.trace
 
 import android.os.IBinder
 import android.os.ServiceManager
+import android.util.Log
 import java.lang.reflect.InvocationHandler
 import java.lang.reflect.Method
 import java.lang.reflect.Proxy
@@ -31,7 +32,7 @@ object TraceSystemService {
                     ProxyHandler(target, ServiceManager.getService(serviceName))
                 ) as IBinder
         } catch (e: Throwable) {
-            throw RuntimeException("Can't hook ServiceManager!", e)
+            Log.e("TraceMethod", "Can't hook ServiceManager!", e)
         }
     }
 
