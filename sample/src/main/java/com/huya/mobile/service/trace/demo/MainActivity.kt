@@ -7,7 +7,6 @@ import android.telephony.PhoneStateListener
 import android.telephony.TelephonyManager
 import androidx.appcompat.app.AppCompatActivity
 import com.huya.mobile.service.trace.PidExceedNumberPhoneStateListeners
-import com.huya.mobile.service.trace.R
 import com.huya.mobile.service.trace.TraceSystemService
 import kotlinx.android.synthetic.main.activity_main.*
 
