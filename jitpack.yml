@@ -1,4 +1,0 @@
-jdk:
-  - openjdk8
-install:
-  - ./gradlew clean -Pgroup=com.huya.mobile -xtest -xlint build publishToMavenLocal
