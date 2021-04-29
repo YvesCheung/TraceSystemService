@@ -18,13 +18,16 @@ class MainService : Service() {
         super.onCreate()
 
         (getSystemService(Context.TELEPHONY_SERVICE) as? TelephonyManager)
-            ?.listen(object : PhoneStateListener() {
+            ?.listen(
+                object : PhoneStateListener() {
 
-                override fun onSignalStrengthsChanged(signalStrength: SignalStrength?) {
-                    super.onSignalStrengthsChanged(signalStrength)
-                }
+                    override fun onSignalStrengthsChanged(signalStrength: SignalStrength?) {
+                        super.onSignalStrengthsChanged(signalStrength)
+                    }
 
-            }, PhoneStateListener.LISTEN_SIGNAL_STRENGTHS)
+                },
+                PhoneStateListener.LISTEN_SIGNAL_STRENGTHS or PhoneStateListener.LISTEN_SERVICE_STATE
+            )
     }
 
     override fun onBind(intent: Intent?): IBinder? = null

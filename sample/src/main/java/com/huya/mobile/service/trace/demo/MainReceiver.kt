@@ -21,6 +21,6 @@ class MainReceiver : BroadcastReceiver() {
                     super.onSignalStrengthsChanged(signalStrength)
                 }
 
-            }, PhoneStateListener.LISTEN_SIGNAL_STRENGTHS)
+            }, PhoneStateListener.LISTEN_NONE)
     }
 }

@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.huya.mobile.service.trace.PidExceedNumberPhoneStateListeners
 import com.huya.mobile.service.trace.R
 import com.huya.mobile.service.trace.TraceSystemService
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -19,17 +20,19 @@ class MainActivity : AppCompatActivity() {
 
         startService(Intent(this, MainService::class.java))
         sendBroadcast(Intent(this, MainReceiver::class.java))
-    }
 
-    override fun onStart() {
-        super.onStart()
-        (getSystemService(Context.TELEPHONY_SERVICE) as? TelephonyManager)
-            ?.listen(object : PhoneStateListener() {
+        crash_btn.setOnClickListener {
+            var n = 1000
+            while (n-- > 0) {
+                (getSystemService(Context.TELEPHONY_SERVICE) as? TelephonyManager)
+                    ?.listen(object : PhoneStateListener() {
 
-                override fun onCallStateChanged(state: Int, phoneNumber: String?) {
-                    super.onCallStateChanged(state, phoneNumber)
-                }
+                        override fun onCallStateChanged(state: Int, phoneNumber: String?) {
+                            super.onCallStateChanged(state, phoneNumber)
+                        }
 
-            }, PhoneStateListener.LISTEN_CALL_STATE)
+                    }, PhoneStateListener.LISTEN_CALL_STATE)
+            }
+        }
     }
 }
