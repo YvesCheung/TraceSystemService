@@ -19,7 +19,13 @@ import java.lang.reflect.Method
  * @author YvesCheung
  * 4/28/21
  */
-class PidExceedNumberPhoneStateListeners : TraceMethod {
+class PidExceedNumberPhoneStateListeners @JvmOverloads constructor(
+    private val logInfo: (info: String) -> Unit =
+    //default implementation for log
+        { info ->
+            Log.i("TraceMethod", info)
+        }
+) : TraceMethod {
 
     override val serviceName: String = "telephony.registry"
 
@@ -37,7 +43,7 @@ class PidExceedNumberPhoneStateListeners : TraceMethod {
                     happenTime[callStack] = c
                     c
                 }
-            Log.i("TraceMethod", "method = ${method.name}, happen times = $cnt, $callStack")
+            logInfo("method = ${method.name}, happen times = $cnt, $callStack")
         }
         return method.invoke(actual, *args)
     }
