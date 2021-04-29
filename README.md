@@ -1,5 +1,7 @@
 # TraceSystemService
 
+![Build](https://github.com/YvesCheung/TraceSystemService/workflows/Build/badge.svg)
+
 > A tools to debug or intercept the methods call for Android `Context.getSystemService`.
 
 ### 遇到的问题
@@ -18,24 +20,29 @@ Caused by: java.lang.IllegalStateException: Pid 25211 has exceeded the number of
 ```
 
 多次调用了 `getSystemService(Context.TELEPHONY_SERVICE).listen(PhoneStateListener)` 方法，导致注册的监听器过多。
+
 在 Android11 以前监听器的数量限制比较宽松，随着使用 Android11 的用户越来越多，问题会越来越突出。
+
 从堆栈上看最后一次调用的地方，可能只是压死骆驼的最后一个监听器，未必是注册最多的地方。
+
 所以就需要一种定位问题的手段，监控通过 `getSystemService(Context.TELEPHONY_SERVICE)` 来调用方法的代码堆栈和调用次数！
 
 **TraceSystemService** 通过动态代理 `ServiceManager.getService()` 的对象，从而在系统服务方法调用的时候，打印出调用的堆栈和次数！
 
 ### 使用
 
-```
+```kotlin
 class App : Application() {
 
     override fun onCreate() {
+        //...
         TraceSystemService.trace(PidExceedNumberPhoneStateListeners())
     }
 }
 ```
 
 尽可能早地调用 `TraceSystemService.trace` 方法，追踪要监听的系统服务和方法。
+
 在Logcat中可以看到方法调用的堆栈：
 
 ```
@@ -59,15 +66,15 @@ class App : Application() {
         at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:1130)
 ```
 
-可以发现 `at com.huya.mobile.service.trace.demo.MainReceiver.onReceive(MainReceiver.kt:18)` 在这一行代码中有注册监听器的代码。
+可以发现 `at com.huya.mobile.service.trace.demo.MainReceiver.onReceive(MainReceiver.kt:18)` 这一行代码中有注册监听器的代码。
+
 而且到目前为止通过这行代码注册的监听器数量是 `happen times = 1` 。
 
 ### 安装
 
-```
+```groovy
 allprojects {
     repositories {
-        ...
         maven { url 'https://jitpack.io' }
     }
 }
@@ -76,3 +83,5 @@ dependencies {
     implementation 'com.github.YvesCheung:TraceSystemService:x.y.z'
 }
 ```
+
+[![](https://jitpack.io/v/YvesCheung/TraceSystemService.svg)](https://jitpack.io/#YvesCheung/TraceSystemService)
