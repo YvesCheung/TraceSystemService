@@ -2,7 +2,7 @@
 
 ![Build](https://github.com/YvesCheung/TraceSystemService/workflows/Build/badge.svg)
 
-> A tools to debug or intercept the methods call for Android `Context.getSystemService`.
+> A tool to debug or intercept the methods call for Android `Context.getSystemService`.
 
 ### 遇到的问题
 
